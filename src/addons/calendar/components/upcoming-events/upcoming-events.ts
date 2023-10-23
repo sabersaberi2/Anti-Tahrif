@@ -197,7 +197,7 @@ export class AddonCalendarUpcomingEventsComponent implements OnInit, DoCheck, On
         // Re-calculate the formatted time so it uses the device date.
         const promises = this.events.map((event) =>
             AddonCalendar.formatEventTime(event, this.timeFormat).then((time) => {
-                event.formattedtime = time;
+                // event.formattedtime = time;
 
                 return;
             }));
