@@ -15,6 +15,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { CoreTimeUtils } from '@services/utils/time';
 import { CoreLogger } from '@singletons/logger';
+import moment from 'jalali-moment';
 
 /**
  * Filter to format a date.
@@ -40,6 +41,7 @@ export class CoreFormatDatePipe implements PipeTransform {
      * @returns Formatted date.
      */
     transform(timestamp: string | number, format?: string, convert?: boolean): string {
+        /*
         timestamp = timestamp || Date.now();
         format = format || 'strftimedaydatetime';
 
@@ -65,6 +67,9 @@ export class CoreFormatDatePipe implements PipeTransform {
         }
 
         return CoreTimeUtils.userDate(timestamp, format, convert);
+        */
+        const date = new Date(timestamp);
+        return moment.from(date.toString(), 'en').format('Do MMMM YYYY dddd HH:mm')
     }
 
 }

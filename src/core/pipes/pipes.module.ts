@@ -19,6 +19,7 @@ import { CoreCreateLinksPipe } from './create-links';
 import { CoreDateDayOrTimePipe } from './date-day-or-time';
 import { CoreDurationPipe } from './duration';
 import { CoreFormatDatePipe } from './format-date';
+import { JalaliPipe } from './jalali-date';
 import { CoreNoTagsPipe } from './no-tags';
 import { CoreSecondsToHMSPipe } from './seconds-to-hms';
 import { CoreTimeAgoPipe } from './time-ago';
@@ -31,10 +32,10 @@ import { CoreToLocaleStringPipe } from './to-locale-string';
         CoreDateDayOrTimePipe,
         CoreDurationPipe,
         CoreFormatDatePipe,
+        JalaliPipe,
         CoreNoTagsPipe,
         CoreSecondsToHMSPipe,
         CoreTimeAgoPipe,
-        // eslint-disable-next-line deprecation/deprecation
         CoreToLocaleStringPipe,
     ],
     exports: [
@@ -43,10 +44,10 @@ import { CoreToLocaleStringPipe } from './to-locale-string';
         CoreDateDayOrTimePipe,
         CoreDurationPipe,
         CoreFormatDatePipe,
+        JalaliPipe,
         CoreNoTagsPipe,
         CoreSecondsToHMSPipe,
         CoreTimeAgoPipe,
-        // eslint-disable-next-line deprecation/deprecation
         CoreToLocaleStringPipe,
     ],
 })
