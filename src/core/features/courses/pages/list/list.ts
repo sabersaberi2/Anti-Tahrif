@@ -20,6 +20,8 @@ import { CoreSites } from '@services/sites';
 import { CoreDomUtils } from '@services/utils/dom';
 import { CoreEventObserver, CoreEvents } from '@singletons/events';
 import { CoreCourseBasicSearchedData, CoreCourses, CoreCoursesProvider } from '../../services/courses';
+import { CoreUtils } from '@services/utils/utils';
+import moodleconfig from "../../../../../../moodle.config.json";
 import { CoreTime } from '@singletons/time';
 import { CoreAnalytics, CoreAnalyticsEventType } from '@services/analytics';
 import { Translate } from '@singletons';
@@ -192,10 +194,33 @@ export class CoreCoursesListPage implements OnInit, OnDestroy {
                 this.courses = [];
             }
 
-            const addCourses = this.loadedCourses.slice(this.coursesLoaded, this.coursesLoaded + this.loadCoursesPerPage);
+            if(Object.keys(moodleconfig.restrictcat).length !== 0) {
+                var restrictcat = moodleconfig.restrictcat;
+                if(restrictcat.categoryid != -1) {
+                    var cat = await CoreCourses.getCategories(restrictcat.categoryid, restrictcat.addsubcategories);
+                    var catObj = CoreUtils.arrayToObject(cat, 'id');
+                    let catIdsInt = Object.values(catObj).map((i) => (i.id));
+                    this.loadedCourses = this.loadedCourses.filter(function(e) {
+                        if(e.categoryid) {
+                            return catIdsInt.includes(e.categoryid);
+                        }
+                        return false;
+                    });
+                }
+            }
+            var addCourses = this.loadedCourses.slice(this.coursesLoaded, this.coursesLoaded + this.loadCoursesPerPage);
             await CoreCoursesHelper.loadCoursesExtraInfo(addCourses, true);
 
-            this.courses = this.courses.concat(addCourses);
+            function customConcat(a1: any, a2: any){
+                let obj = a1.slice();
+                let objVal = Object.values(obj).map((i: CoreCourseBasicSearchedData) => (i.categoryid));
+                a2.forEach(function(e: any){
+                    if(!objVal.includes(e.categoryid))
+                        obj.push(e);
+                })
+                return obj;
+            }
+            this.courses = customConcat(this.courses, addCourses);
 
             this.courseIds = this.courses.map((course) => course.id).join(',');
 
@@ -319,6 +344,20 @@ export class CoreCoursesListPage implements OnInit, OnDestroy {
                 this.courses = response.courses;
             } else {
                 this.courses = this.courses.concat(response.courses);
+            }
+            if(Object.keys(moodleconfig.restrictcat).length !== 0) {
+                var restrictcat = moodleconfig.restrictcat;
+                if(restrictcat.categoryid != -1) {
+                    var cat = await CoreCourses.getCategories(restrictcat.categoryid, restrictcat.addsubcategories);
+                    var catObj = CoreUtils.arrayToObject(cat, 'id');
+                    let catIdsInt = Object.values(catObj).map((i) => (i.id));
+                    this.courses = this.courses.filter(function(e) {
+                        if(e.categoryid) {
+                            return catIdsInt.includes(e.categoryid);
+                        }
+                        return false;
+                    });
+                }
             }
             this.searchTotal = response.total;
 
