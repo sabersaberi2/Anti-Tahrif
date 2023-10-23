@@ -18,6 +18,7 @@ import { CoreConstants } from '@/core/constants';
 import { CoreSites } from '@services/sites';
 import { CoreNavigator } from '@services/navigator';
 import { CoreSite } from '@classes/site';
+import moodleconfig from "../../../../../../moodle.config.json";
 
 /**
  * App settings about menu page.
@@ -33,7 +34,7 @@ export class CoreSettingsAboutPage {
     versionName: string;
     privacyPolicy: string;
     feedbackFormUrl = CoreConstants.CONFIG.feedbackFormUrl ?? 'https://feedback.moodle.org/mobileapp';
-    a11yStatement = CoreConstants.CONFIG.a11yStatement ?? 'https://apps.moodle.com/admin/tool/policy/view.php?versionid=5';
+    a11yStatement = moodleconfig.aboutusurl ? moodleconfig.aboutusurl : (CoreConstants.CONFIG.a11yStatement ?? 'https://apps.moodle.com/admin/tool/policy/view.php?versionid=5');
     currentSite?: CoreSite;
     showSurvey: boolean | undefined = false;
     legalDisclaimer = CoreConstants.CONFIG.legalDisclaimer;
