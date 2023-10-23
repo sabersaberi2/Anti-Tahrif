@@ -33,6 +33,7 @@ import { CoreTextUtils } from '@services/utils/text';
 import { AddonCourseCompletion } from '@addons/coursecompletion/services/coursecompletion';
 import { IonRefresher, IonSearchbar } from '@ionic/angular';
 import { CoreNavigator } from '@services/navigator';
+import moodleconfig from "../../../../../../moodle.config.json";
 import { PageLoadWatcher } from '@classes/page-load-watcher';
 import { PageLoadsManager } from '@classes/page-loads-manager';
 
@@ -282,7 +283,20 @@ export class AddonBlockMyOverviewComponent extends CoreBlockBaseComponent implem
             }),
             (prevCourses, newCourses) => this.coursesHaveMeaningfulChanges(prevCourses, newCourses),
         );
-
+        if(Object.keys(moodleconfig.restrictcat).length !== 0) {
+            var restrictcat = moodleconfig.restrictcat;
+            if(restrictcat.categoryid != -1) {
+                var cat = await CoreCourses.getCategories(restrictcat.categoryid, restrictcat.addsubcategories);
+                var catObj = CoreUtils.arrayToObject(cat, 'id');
+                let catIdsInt = Object.values(catObj).map((i) => (i.id));
+                this.allCourses = this.allCourses.filter(function(e) {
+                    if(e.categoryid) {
+                        return catIdsInt.includes(e.categoryid);
+                    }
+                    return false;
+                });
+            }
+        }
         this.hasCourses = this.allCourses.length > 0;
     }
 
