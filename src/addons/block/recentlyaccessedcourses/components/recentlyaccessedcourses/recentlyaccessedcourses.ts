@@ -31,6 +31,7 @@ import { AddonCourseCompletion } from '@addons/coursecompletion/services/coursec
 import { CoreBlockBaseComponent } from '@features/block/classes/base-block-component';
 import { CoreUtils } from '@services/utils/utils';
 import { CoreSite } from '@classes/site';
+import moodleconfig from "../../../../../../moodle.config.json";
 
 /**
  * Component to render a recent courses block.
@@ -160,6 +161,20 @@ export class AddonBlockRecentlyAccessedCoursesComponent extends CoreBlockBaseCom
                 course.categoryname = '';
             }
         });
+        if(Object.keys(moodleconfig.restrictcat).length !== 0) {
+            var restrictcat = moodleconfig.restrictcat;
+            if(restrictcat.categoryid != -1) {
+                var cat = await CoreCourses.getCategories(restrictcat.categoryid, restrictcat.addsubcategories);
+                var catObj = CoreUtils.arrayToObject(cat, 'id');
+                let catIdsInt = Object.values(catObj).map((i) => (i.id));
+                this.courses = this.courses.filter(function(e) {
+                    if(e.categoryid) {
+                        return catIdsInt.includes(e.categoryid);
+                    }
+                    return false;
+                });
+            }
+        }
     }
 
     /**
