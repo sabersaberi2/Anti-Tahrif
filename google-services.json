@@ -1,42 +1,36 @@
 {
   "project_info": {
-    "project_number": "",
-    "firebase_url": "",
-    "project_id": "",
-    "storage_bucket": ""
+    "project_number": "463563754260",
+    "project_id": "irlmssazanlms",
+    "storage_bucket": "irlmssazanlms.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:111111111111:android:1111111111111111",
+        "mobilesdk_app_id": "1:463563754260:android:b7b9c3f9122b802bfb1001",
         "android_client_info": {
-          "package_name": "com.moodle.moodlemobile"
+          "package_name": "ir.lmssazan.lms"
         }
       },
       "oauth_client": [
         {
-          "client_id": "",
+          "client_id": "463563754260-2kb33foe0etslr766n7u989ftnd2o2kp.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": ""
-        },
-        {
-          "current_key": ""
+          "current_key": "AIzaSyDbO1pc6Xlab4hpECQCUULvP-JxCAJWL7c"
         }
       ],
       "services": {
-        "analytics_service": {
-          "status": 1
-        },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
+          "other_platform_oauth_client": [
+            {
+              "client_id": "463563754260-2kb33foe0etslr766n7u989ftnd2o2kp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
