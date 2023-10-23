@@ -28,6 +28,7 @@ import { CoreSitePublicConfigResponse } from '@classes/site';
 import { CoreEvents } from '@singletons/events';
 import { CoreNavigator } from '@services/navigator';
 import { CoreForms } from '@singletons/form';
+import moodleconfig from '../../../../../../moodle.config.json';
 import { CoreUserSupport } from '@features/user/services/support';
 import { CoreUserSupportConfig } from '@features/user/classes/support/support-config';
 import { CoreUserGuestSupportConfig } from '@features/user/classes/support/guest-support-config';
@@ -48,6 +49,7 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
 
     credForm!: FormGroup;
     siteUrl!: string;
+    registerAlternativeUrl?: string;
     siteName?: string;
     logoUrl?: string;
     authInstructions?: string;
@@ -327,7 +329,10 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
      * Open email signup page.
      */
     openEmailSignup(): void {
-        CoreNavigator.navigate('/login/emailsignup', { params: { siteUrl: this.siteUrl } });
+        if(moodleconfig.registeralternativeurl)
+        {window.location.href = moodleconfig.registeralternativeurl;}
+        else
+        {CoreNavigator.navigate('/login/emailsignup', { params: { siteUrl: this.siteUrl } });}
     }
 
     /**
