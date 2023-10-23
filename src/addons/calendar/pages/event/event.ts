@@ -281,7 +281,7 @@ export class AddonCalendarEventPage implements OnInit, OnDestroy {
 
             // Re-calculate the formatted time so it uses the device date.
             promises.push(AddonCalendar.getCalendarTimeFormat().then(async (timeFormat) => {
-                event.formattedtime = await AddonCalendar.formatEventTime(event, timeFormat);
+                // event.formattedtime = await AddonCalendar.formatEventTime(event, timeFormat);
 
                 return;
             }));
