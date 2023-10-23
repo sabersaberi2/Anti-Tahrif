@@ -100,6 +100,14 @@ export class CoreCoursesCourseListItemComponent implements OnInit, OnDestroy, On
 
         } else if ('enrollmentmethods' in this.course) {
             this.enrolmentIcons = await CoreEnrolHelper.getEnrolmentIcons(this.course.enrollmentmethods, this.course.id);
+
+            if (this.enrolmentIcons.length == 0) {
+                this.enrolmentIcons.push({
+                    label: 'core.courses.notenrollable',
+                    icon: 'fas-lock',
+                });
+                this.element.classList.add('locked-course');
+            }
         }
     }
 
