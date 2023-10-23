@@ -67,8 +67,8 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
     hasOffline = false;
     isOnline = false;
     syncIcon = CoreConstants.ICON_LOADING;
-    showCalendar = true;
-    loadUpcoming = false;
+    showCalendar = false;
+    loadUpcoming = true;
     filter: AddonCalendarFilter = {
         filtered: false,
         courseId: undefined,
@@ -163,7 +163,7 @@ export class AddonCalendarIndexPage implements OnInit, OnDestroy {
      * View loaded.
      */
     ngOnInit(): void {
-        this.loadUpcoming = !!CoreNavigator.getRouteBooleanParam('upcoming');
+        this.loadUpcoming = true;
         this.showCalendar = !this.loadUpcoming;
 
         this.route.queryParams.subscribe(async () => {
