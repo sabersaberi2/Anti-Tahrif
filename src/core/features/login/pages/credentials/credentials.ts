@@ -212,7 +212,8 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
         this.showScanQR = await CoreLoginHelper.displayQRInCredentialsScreen(this.siteConfig.tool_mobile_qrcodetype);
 
         const disabledFeatures = CoreLoginHelper.getDisabledFeatures(this.siteConfig);
-        this.canSignup = this.siteConfig.registerauth == 'email' &&
+        var altexist = moodleconfig.registeralternativeurl && moodleconfig.registeralternativeurl != "" ? true : false;
+        this.canSignup = (this.siteConfig.registerauth == 'email' || altexist) &&
                     !CoreLoginHelper.isEmailSignupDisabled(this.siteConfig, disabledFeatures);
         this.showForgottenPassword = !CoreLoginHelper.isForgottenPasswordDisabled(this.siteConfig, disabledFeatures);
         this.exceededAttemptsHTML = CoreLoginHelper.buildExceededAttemptsHTML(
@@ -342,10 +343,17 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
      * Open email signup page.
      */
     openEmailSignup(): void {
-        if(moodleconfig.registeralternativeurl)
-        {window.location.href = moodleconfig.registeralternativeurl;}
-        else
-        {CoreNavigator.navigate('/login/emailsignup', { params: { siteUrl: this.siteUrl } });}
+        var altexist = moodleconfig.registeralternativeurl && moodleconfig.registeralternativeurl != "" ? true : false;
+        if(altexist) {
+            if(this.siteConfig!.registerauth == 'email') {
+                CoreNavigator.navigate('/login/emailsignup', { params: { siteUrl: this.siteUrl } })
+            }
+            else {
+                window.location.href = moodleconfig.registeralternativeurl;
+            }
+        } else {
+            CoreNavigator.navigate('/login/emailsignup', { params: { siteUrl: this.siteUrl } });
+        }
     }
 
     /**
