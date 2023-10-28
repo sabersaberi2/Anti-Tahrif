@@ -70,14 +70,14 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
         this.siteId = currentSite.getId();
         this.siteInfo = currentSite.getInfo();
         this.siteName = await currentSite.getSiteName();
-
+        this.siteUrl = currentSite.getURL();
         if(moodleconfig.firstpagedisplayedurl) {
             this.firstpagedisplayedurl = moodleconfig.firstpagedisplayedurl;
         }
         else {
             this.firstpagedisplayedurl = this.siteUrl;
         }
-        if(this.firstpagedisplayedurl.startsWith('https://') || this.firstpagedisplayedurl.startsWith('http://')) {
+        if(this.firstpagedisplayedurl.startsWith("https://") || this.firstpagedisplayedurl.startsWith("http://")) {
             this.firstpagedisplayedurlhref = this.firstpagedisplayedurl
         } else {
             this.firstpagedisplayedurlhref = "https://" + this.firstpagedisplayedurl
@@ -88,7 +88,7 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
         else {
             this.firstpagedisplayedsitename = this.siteName;
         }
-        this.siteUrl = currentSite.getURL();
+
         this.displaySwitchAccount = !currentSite.isFeatureDisabled('NoDelegate_SwitchAccount');
         this.displayContactSupport = new CoreUserAuthenticatedSupportConfig(currentSite).canContactSupport();
         this.removeAccountOnLogout = !!CoreConstants.CONFIG.removeaccountonlogout;
