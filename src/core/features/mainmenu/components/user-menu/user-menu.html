@@ -15,17 +15,19 @@
 <ion-content>
     <core-loading [hideUntil]="siteLogoLoaded && handlersLoaded">
         <ion-list>
-            <ion-item button class="core-usermenu-siteinfo ion-text-wrap" *ngIf="siteInfo" lines="full" detail="false" [href]="siteUrl"
-                core-link auto-login="yes">
+            <ion-item button class="core-usermenu-siteinfo ion-text-wrap" *ngIf="siteInfo" lines="full" detail="false"
+                [href]="firstpagedisplayedurlhref" core-link auto-login="yes">
                 <ion-label>
                     <!-- Show site logo. -->
                     <img class="core-usermenu-site-logo" *ngIf="siteLogo && siteLogoLoaded" [src]="siteLogo" role="presentation" alt=""
                         onError="this.class='image-not-found'">
                     <p class="core-usermenu-sitename">
-                        <core-format-text [text]="siteName" contextLevel="system" [contextInstanceId]="0" [wsNotFiltered]="true">
+                        <core-format-text [text]="firstpagedisplayedsitename" contextLevel="system" [contextInstanceId]="0"
+                            [wsNotFiltered]="true">
                         </core-format-text>
                     </p>
-                    <a [href]="siteUrl" core-link auto-login="yes" class="core-usermenu-siteurl">{{ siteUrl }}</a>
+                    <a [href]="firstpagedisplayedurlhref" core-link auto-login="yes" class="core-usermenu-siteurl">{{ firstpagedisplayedurl
+                        }}</a>
                 </ion-label>
             </ion-item>
             <ion-item button class="core-usermenu-handler ion-text-wrap" *ngIf="siteInfo" lines="full" (click)="openUserProfile($event)"

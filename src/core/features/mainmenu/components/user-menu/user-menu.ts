@@ -21,6 +21,7 @@ import { CoreLoginHelper } from '@features/login/services/login-helper';
 import { CoreUserAuthenticatedSupportConfig } from '@features/user/classes/support/authenticated-support-config';
 import { CoreUserSupport } from '@features/user/services/support';
 import { CoreUser, CoreUserProfile } from '@features/user/services/user';
+import moodleconfig from '../../../../../../moodle.config.json';
 import {
     CoreUserProfileHandlerData,
     CoreUserDelegate,
@@ -46,6 +47,9 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
     siteId?: string;
     siteInfo?: CoreSiteInfo;
     siteName?: string;
+    firstpagedisplayedurl?: string;
+    firstpagedisplayedurlhref?: string;
+    firstpagedisplayedsitename!: string;
     siteLogo?: string;
     siteLogoLoaded = false;
     siteUrl?: string;
@@ -66,6 +70,24 @@ export class CoreMainMenuUserMenuComponent implements OnInit, OnDestroy {
         this.siteId = currentSite.getId();
         this.siteInfo = currentSite.getInfo();
         this.siteName = await currentSite.getSiteName();
+
+        if(moodleconfig.firstpagedisplayedurl) {
+            this.firstpagedisplayedurl = moodleconfig.firstpagedisplayedurl;
+        }
+        else {
+            this.firstpagedisplayedurl = this.siteUrl;
+        }
+        if(this.firstpagedisplayedurl.startsWith('https://') || this.firstpagedisplayedurl.startsWith('http://')) {
+            this.firstpagedisplayedurlhref = this.firstpagedisplayedurl
+        } else {
+            this.firstpagedisplayedurlhref = "https://" + this.firstpagedisplayedurl
+        }
+        if(moodleconfig.firstpagedisplayedsitename) {
+            this.firstpagedisplayedsitename = moodleconfig.firstpagedisplayedsitename
+        }
+        else {
+            this.firstpagedisplayedsitename = this.siteName;
+        }
         this.siteUrl = currentSite.getURL();
         this.displaySwitchAccount = !currentSite.isFeatureDisabled('NoDelegate_SwitchAccount');
         this.displayContactSupport = new CoreUserAuthenticatedSupportConfig(currentSite).canContactSupport();

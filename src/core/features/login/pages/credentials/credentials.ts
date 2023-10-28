@@ -49,7 +49,9 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
 
     credForm!: FormGroup;
     siteUrl!: string;
+    firstpagedisplayedurl!: string;
     registerAlternativeUrl?: string;
+    firstpagedisplayedsitename?: string;
     siteName?: string;
     logoUrl?: string;
     authInstructions?: string;
@@ -90,8 +92,19 @@ export class CoreLoginCredentialsPage implements OnInit, OnDestroy {
             if (this.siteCheck?.config) {
                 this.siteConfig = this.siteCheck.config;
             }
-
+            if(moodleconfig.firstpagedisplayedurl) {
+                this.firstpagedisplayedurl = moodleconfig.firstpagedisplayedurl;
+            }
+            else {
+                this.firstpagedisplayedurl = this.siteUrl;
+            }
             this.siteName = CoreNavigator.getRouteParam('siteName');
+            if(moodleconfig.firstpagedisplayedsitename) {
+                this.firstpagedisplayedsitename = moodleconfig.firstpagedisplayedsitename
+            }
+            else {
+                this.firstpagedisplayedsitename = this.siteName;
+            }
             this.logoUrl = !CoreConstants.CONFIG.forceLoginLogo && CoreNavigator.getRouteParam('logoUrl') || undefined;
             this.urlToOpen = CoreNavigator.getRouteParam('urlToOpen');
             this.supportConfig = this.siteConfig && new CoreUserGuestSupportConfig(this.siteConfig);

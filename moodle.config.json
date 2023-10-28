@@ -33,6 +33,8 @@
         "high": 120
     },
     "sites": [{"url": "https://deepnex.ai/lms"}],
+    "firstpagedisplayedurl": "deepnex.aaaaa",
+    "firstpagedisplayedsitename": "deepnexxxxxx",
     "multisitesdisplay": "",
     "sitefindersettings": {},
     "onlyallowlistedsites": false,
